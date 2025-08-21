@@ -30,9 +30,9 @@ const userSchema = new mongoose.Schema({
     password: String,
     username: String,
     mobile: String,
-    blood: String,
+    blood: String,          // ✅ saved permanently
     hometown: String,
-    lastDonation: Date
+    lastDonation: Date      // ✅ last donation date
 });
 const Users = mongoose.model("Users", userSchema);
 
@@ -46,8 +46,8 @@ function renderMessage(htmlFile, message = '', color = 'red') {
 
 // ------------------ ROUTES ------------------
 
-// Root - Login page
-app.get('/', (req, res) => res.send(renderMessage('login.html', '')));
+// Root - login page
+app.get('/', (req, res) => res.send(renderMessage('index.html', '')));
 
 // Registration page
 app.get('/register', (req, res) => res.send(renderMessage('register.html', '')));
@@ -67,13 +67,13 @@ app.post('/register', async (req, res) => {
             password: hashedPassword,
             username,
             mobile: contactNumber,
-            blood: bloodGroup,  // ✅ saved permanently
+            blood: bloodGroup,       // ✅ permanent
             hometown: district,
             lastDonation: null
         });
 
         await user.save();
-        res.send(renderMessage('login.html', "Registration Successful ✅ Please login", 'green'));
+        res.send(renderMessage('index.html', "Registration Successful ✅ Please login", 'green'));
     } catch (error) {
         console.error(error);
         res.send(renderMessage('register.html', "Internal Server Error 🚨", 'red'));
@@ -86,10 +86,10 @@ app.post('/login', async (req, res) => {
         const { email, password } = req.body;
 
         const user = await Users.findOne({ email });
-        if (!user) return res.send(renderMessage('login.html', "User not found ❌", 'red'));
+        if (!user) return res.send(renderMessage('index.html', "User not found ❌", 'red'));
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.send(renderMessage('login.html', "Wrong password ❌", 'red'));
+        if (!isMatch) return res.send(renderMessage('index.html', "Wrong password ❌", 'red'));
 
         // Save session
         req.session.user = {
@@ -100,7 +100,7 @@ app.post('/login', async (req, res) => {
         res.redirect('/home');
     } catch (error) {
         console.error(error);
-        res.send(renderMessage('login.html', "Something went wrong 🚨", 'red'));
+        res.send(renderMessage('index.html', "Something went wrong 🚨", 'red'));
     }
 });
 
@@ -155,7 +155,7 @@ app.get('/profile-data', async (req, res) => {
             email: user.email,
             username: user.username,
             mobile: user.mobile || '',
-            bloodGroup: user.blood || '',  // ✅ still shown
+            bloodGroup: user.blood || '',       // ✅ always shown
             hometown: user.hometown || '',
             lastDonation: user.lastDonation ? user.lastDonation.toISOString().split("T")[0] : ''
         });
@@ -171,8 +171,7 @@ app.post('/updateProfile', async (req, res) => {
 
     try {
         const { email } = req.session.user;
-        const { username, mobile, hometown, lastDonation } = req.body;  
-        // ❌ removed blood update here
+        const { username, mobile, hometown, lastDonation } = req.body;
 
         const user = await Users.findOne({ email });
         if (!user) return res.send("User not found ❌");
@@ -180,7 +179,7 @@ app.post('/updateProfile', async (req, res) => {
         user.username = username;
         user.mobile = mobile;
         user.hometown = hometown;
-        if (lastDonation) user.lastDonation = new Date(lastDonation);
+        if (lastDonation) user.lastDonation = new Date(lastDonation); // ✅ save last donation
         await user.save();
 
         req.session.user.username = username;
