@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Donation</title>
+  <link rel="stylesheet" href="./dist/output.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-red-600 text-white font-[Poppins] overflow-x-hidden transition-colors duration-500">
+
+  <!-- Navbar -->
+  <nav class="w-full fixed top-0 bg-red-700 bg-opacity-90 backdrop-blur-md shadow-md z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <ul class="hidden md:flex space-x-8 font-semibold uppercase text-sm">
+        <li><a href="Home.html" class="hover:text-red-300 transition">Home</a></li>
+        <li><a href="Who.html" class="hover:text-red-300 transition">Who we are</a></li>
+        <li><a href="What.html" class="hover:text-red-300 transition">What we Do</a></li>
+        <li><a href="Media.html" class="hover:text-red-300 transition">Media and Publication</a></li>
+        <li><a href="Contact.html" class="hover:text-red-300 transition">Contact Us</a></li>
+        <li><a href="DonorList.html" class="hover:text-red-300 transition">DonorList</a></li>
+        <li class="flex items-center space-x-3">
+          <img src="image/donor.png" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-white">
+          <a id="profileLink" href="profile.html" class="hover:text-red-300 transition">Your Profile</a>
+        </li>
+      </ul>
+
+      <!-- Hamburger Menu for Mobile -->
+      <div id="hamburger" class="space-y-1 md:hidden cursor-pointer z-20">
+        <div class="w-6 h-0.5 bg-white"></div>
+        <div class="w-6 h-0.5 bg-white"></div>
+        <div class="w-6 h-0.5 bg-white"></div>
+      </div>
+
+      <ul id="menu" class="hidden absolute top-16 right-6 bg-red-700 p-5 rounded-b-3xl space-y-6 text-sm uppercase">
+        <li><a href="Home.html" class="hover:text-white transition">Home</a></li>
+        <li><a href="Who.html" class="hover:text-white transition">Who we are</a></li>
+        <li><a href="What.html" class="hover:text-white transition">What we Do</a></li>
+        <li><a href="Media.html" class="hover:text-white transition">Media and Publication</a></li>
+        <li><a href="Contact.html" class="hover:text-white transition">Contact Us</a></li>
+        <div class="flex items-center space-x-3">
+          <img src="image/donor.png" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-white">
+          <a id="profileLinkMobile" href="profile.html" class="hover:text-red-300 transition">Your Profile</a>
+        </div>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="pt-40 pb-20 px-6 md:px-16 lg:px-32 flex flex-col-reverse lg:flex-row items-center justify-center gap-10 lg:gap-x-40">
+    <div class="text-center lg:text-left">
+      <h1 class="text-5xl font-bold mb-4 uppercase">Blood</h1>
+      <div class="flex justify-center lg:justify-start gap-2 mb-4">
+        <span class="text-5xl font-bold uppercase">fuels</span>
+      </div>
+      <h2 class="text-5xl font-bold mb-6 uppercase">life’s fire</h2>
+      <a href="mailto:talhabinkobir4050@gmail.com" target="_blank">
+        <button class="bg-white text-red-600 text-xl font-bold px-6 py-2 rounded-full hover:bg-red-400 transition-all duration-300">
+          Details
+        </button>
+      </a>
+    </div>
+
+    <div class="md:w-96 lg:w-[400px] overflow-hidden rounded-full shadow-xl transition-transform duration-500 hover:scale-105">
+      <img src="./image/blood-donation.png" alt="Blood Donation" class="object-cover w-full h-full rounded-full">
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-red-500 py-6 mt-10">
+    <div class="max-w-7xl mx-auto text-center">
+      <p class="text-xl font-bold">Developed By Talha ⓒ 2025</p>
+    </div>
+  </footer>
+
+  <script src="./menu.js"></script>
+  <script>
+    // Get email from query params
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('email');
+
+    if (email) {
+      const profileLinks = [document.getElementById('profileLink'), document.getElementById('profileLinkMobile')];
+      profileLinks.forEach(link => {
+        link.href = `/profile?email=${encodeURIComponent(email)}`;
+      });
+    }
+  </script>
+
+</body>
+</html>

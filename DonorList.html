@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donor List</title>
+  <link rel="stylesheet" href="./dist/output.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-red-600 text-white font-[Poppins] min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-red-700 bg-opacity-90 p-6 text-center shadow-md">
+    <h1 class="text-3xl font-bold">Donor List</h1>
+  </header>
+
+  <!-- Donor Table -->
+  <div class="p-6 max-w-4xl mx-auto">
+    <table class="w-full table-auto border-collapse border border-red-400">
+      <thead>
+        <tr class="bg-red-800">
+          <th class="border border-red-400 px-4 py-2 text-left">Name</th>
+          <th class="border border-red-400 px-4 py-2 text-left">Blood Group</th>
+          <th class="border border-red-400 px-4 py-2 text-left">Contact Number</th>
+        </tr>
+      </thead>
+      <tbody id="donorTableBody">
+        <!-- Donor rows will be inserted here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    async function loadDonors() {
+      try {
+        const res = await fetch('/donorlist');
+        if (!res.ok) throw new Error("Failed to fetch donors");
+
+        const donors = await res.json();
+        const tbody = document.getElementById('donorTableBody');
+        tbody.innerHTML = ''; // clear previous rows
+
+        donors.forEach(donor => {
+          const row = document.createElement('tr');
+          row.classList.add('hover:bg-red-700', 'transition');
+
+          row.innerHTML = `
+            <td class="border border-red-400 px-4 py-2">${donor.username || ''}</td>
+            <td class="border border-red-400 px-4 py-2">${donor.blood || ''}</td>
+            <td class="border border-red-400 px-4 py-2">${donor.mobile || ''}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error(err);
+        alert("Failed to load donor list");
+      }
+    }
+
+    loadDonors();
+  </script>
+
+</body>
+</html>

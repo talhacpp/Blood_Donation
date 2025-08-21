@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Donation - Profile</title>
+  <link rel="stylesheet" href="./dist/output.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-red-600 text-white font-[Poppins] min-h-screen flex items-center justify-center">
+
+  <!-- Profile Form -->
+  <form id="profileForm" action="/updateProfile" method="post"
+    class="bg-red-700 bg-opacity-90 p-10 rounded-2xl shadow-2xl w-full max-w-md text-center space-y-4">
+    <h1 class="text-3xl font-bold mb-6">Profile</h1>
+
+    <!-- Email (readonly) -->
+    <div class="text-left">
+      <label class="font-semibold block mb-1">Email:</label>
+      <input type="email" name="email" id="email" readonly
+        class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" />
+    </div>
+
+    <!-- Username -->
+    <div class="text-left">
+      <label class="font-semibold block mb-1">Username:</label>
+      <input type="text" name="username" id="username"
+        class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" />
+    </div>
+
+    <!-- Mobile Number -->
+    <div class="text-left">
+      <label class="font-semibold block mb-1">Mobile Number:</label>
+      <input type="text" name="mobile" id="mobile"
+        class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" />
+    </div>
+
+    <!-- Blood Group -->
+    <div class="text-left">
+      <label class="font-semibold block mb-1">Blood Group:</label>
+      <input type="text" name="blood" id="bloodGroup"
+        class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" />
+    </div>
+
+    <!-- Hometown -->
+    <div class="text-left">
+      <label class="font-semibold block mb-1">Hometown:</label>
+      <input type="text" name="hometown" id="hometown"
+        class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" />
+    </div>
+
+    <!-- Update Button -->
+    <div class="mt-4">
+      <button type="submit"
+        class="px-6 py-2 bg-white text-red-700 font-semibold rounded-full hover:bg-red-100 transition duration-300">
+        Update Profile
+      </button>
+    </div>
+
+    <!-- Logout Button -->
+    <div class="mt-4">
+      <a href="/logout"
+        class="px-6 py-2 bg-white text-red-700 font-semibold rounded-full hover:bg-red-100 transition duration-300">
+        Logout
+      </a>
+    </div>
+  </form>
+
+  <script>
+    // Fetch logged-in user's profile data
+    async function loadProfile() {
+      try {
+        const res = await fetch('/profile-data');
+        if (!res.ok) throw new Error('Not logged in');
+        const user = await res.json();
+
+        document.getElementById('email').value = user.email || '';
+        document.getElementById('username').value = user.username || '';
+        document.getElementById('mobile').value = user.mobile || '';
+        document.getElementById('bloodGroup').value = user.bloodGroup || '';
+        document.getElementById('hometown').value = user.hometown || '';
+      } catch (err) {
+        alert('❌ You are not logged in. Redirecting to login page.');
+        window.location.href = '/';
+      }
+    }
+
+    loadProfile();
+  </script>
+
+</body>
+
+</html>

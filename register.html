@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blood Donation - Register</title>
+  <link rel="stylesheet" href="./dist/output.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-red-600 text-white font-[Poppins] min-h-screen flex flex-col items-center justify-center transition-colors duration-500">
+
+  <h1 class="text-4xl font-bold mb-8 text-white hover:text-red-100 transition">Blood Donation</h1>
+
+  <form action="/register" method="post"
+    class="bg-red-700 bg-opacity-90 backdrop-blur-lg shadow-2xl py-12 px-8 rounded-2xl w-full max-w-md animate-[fadeInScale_0.6s_ease-out] transition-all duration-500">
+
+    <h2 class="text-center text-3xl font-bold mb-6 text-white hover:text-red-100 transition">Register</h2>
+
+    <div id="message" class="mb-4 text-center text-lg font-semibold">
+      {{message}}
+    </div>
+
+    <div class="space-y-6">
+
+      <div>
+        <label for="username" class="block text-xl font-semibold text-red-100 mb-2">Username</label>
+        <input type="text" id="username" name="username" placeholder="xyhg123"
+          class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" required />
+      </div>
+
+      <div>
+        <label for="email" class="block text-xl font-semibold text-red-100 mb-2">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="yourname@gmail.com"
+          class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" required />
+      </div>
+
+      <div>
+        <label for="password" class="block text-xl font-semibold text-red-100 mb-2">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••"
+          class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" required />
+      </div>
+
+      <div>
+        <label for="bloodGroup" class="block text-xl font-semibold text-red-100 mb-2">Blood Group</label>
+        <select id="bloodGroup" name="bloodGroup"
+          class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" required>
+          <option value="">Select</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="district" class="block text-xl font-semibold text-red-100 mb-2">District</label>
+        <input type="text" id="district" name="district" placeholder="Rajshahi"
+          class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" required />
+      </div>
+
+      <div>
+        <label for="contactNumber" class="block text-xl font-semibold text-red-100 mb-2">Contact Number</label>
+        <input type="text" id="contactNumber" name="contactNumber" placeholder="017xxxxxxx"
+          class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" required />
+      </div>
+
+      <div class="text-center space-x-4">
+        <button type="submit"
+          class="mt-4 px-6 py-2 bg-white text-red-700 font-semibold rounded-full hover:bg-red-100 transition duration-300">
+          Register
+        </button>
+
+        <button type="button" onclick="window.location.href='login.html'"
+          class="mt-4 px-6 py-2 bg-white text-red-700 font-semibold rounded-full hover:bg-red-100 transition duration-300">
+          Login
+        </button>
+      </div>
+
+      <div class="text-center mt-6">
+        <p class="text-red-100 text-sm">
+          Already have an account?
+          <a href="login.html" class="text-white underline hover:text-red-200 transition">Login</a>
+        </p>
+      </div>
+    </div>
+  </form>
+</body>
+</html>
