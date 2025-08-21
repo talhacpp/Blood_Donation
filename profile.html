@@ -41,8 +41,8 @@
     <!-- Blood Group -->
     <div class="text-left">
       <label class="font-semibold block mb-1">Blood Group:</label>
-      <input type="text" name="blood" id="bloodGroup"
-        class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" />
+      <input type="text" name="bloodGroup" id="bloodGroup" readonly
+        class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-gray-300 border border-red-300 rounded-md cursor-not-allowed" />
     </div>
 
     <!-- Hometown -->
@@ -50,6 +50,19 @@
       <label class="font-semibold block mb-1">Hometown:</label>
       <input type="text" name="hometown" id="hometown"
         class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" />
+    </div>
+
+    <!-- Last Blood Donation Date -->
+    <div class="text-left">
+      <label class="font-semibold block mb-1">Last Blood Donation (MM/DD/YYYY):</label>
+      <input type="date" name="lastDonation" id="lastDonation"
+        class="w-full text-lg px-4 py-2 bg-red-600 bg-opacity-60 text-white border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition" />
+    </div>
+
+    <!-- Difference Display -->
+    <div class="text-left">
+      <label class="font-semibold block mb-1">Days since last donation:</label>
+      <p id="daysDiff" class="text-lg font-bold">—</p>
     </div>
 
     <!-- Update Button -->
@@ -82,11 +95,33 @@
         document.getElementById('mobile').value = user.mobile || '';
         document.getElementById('bloodGroup').value = user.bloodGroup || '';
         document.getElementById('hometown').value = user.hometown || '';
+        if (user.lastDonation) {
+          document.getElementById('lastDonation').value = user.lastDonation;
+          calculateDaysDiff(user.lastDonation);
+        }
       } catch (err) {
         alert('❌ You are not logged in. Redirecting to login page.');
         window.location.href = '/';
       }
     }
+
+    // Calculate difference in days from today
+    function calculateDaysDiff(dateStr) {
+      const today = new Date();
+      const donationDate = new Date(dateStr);
+      if (isNaN(donationDate)) {
+        document.getElementById('daysDiff').textContent = "Invalid Date";
+        return;
+      }
+      const diffTime = today - donationDate;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      document.getElementById('daysDiff').textContent = diffDays + " days";
+    }
+
+    // Update days difference when user selects a date
+    document.getElementById('lastDonation').addEventListener('change', (e) => {
+      calculateDaysDiff(e.target.value);
+    });
 
     loadProfile();
   </script>

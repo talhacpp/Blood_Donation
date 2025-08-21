@@ -17,14 +17,21 @@
     <h1 class="text-3xl font-bold">Donor List</h1>
   </header>
 
+  <!-- Search Bar -->
+  <div class="p-6 max-w-5xl mx-auto flex justify-end mb-4">
+    <input type="text" id="bloodSearch" placeholder="Search Blood Group..."
+      class="px-4 py-2 rounded-md text-black w-60 focus:outline-none focus:ring-2 focus:ring-white" />
+  </div>
+
   <!-- Donor Table -->
-  <div class="p-6 max-w-4xl mx-auto">
+  <div class="p-6 max-w-5xl mx-auto">
     <table class="w-full table-auto border-collapse border border-red-400">
       <thead>
         <tr class="bg-red-800">
           <th class="border border-red-400 px-4 py-2 text-left">Name</th>
           <th class="border border-red-400 px-4 py-2 text-left">Blood Group</th>
           <th class="border border-red-400 px-4 py-2 text-left">Contact Number</th>
+          <th class="border border-red-400 px-4 py-2 text-left">Last Donation (Days Ago)</th>
         </tr>
       </thead>
       <tbody id="donorTableBody">
@@ -34,31 +41,59 @@
   </div>
 
   <script>
+    // Calculate difference in days
+    function calculateDaysDiff(dateStr) {
+      if (!dateStr) return "—"; // no donation date
+      const today = new Date();
+      const donationDate = new Date(dateStr);
+      if (isNaN(donationDate)) return "Invalid Date";
+
+      const diffTime = today - donationDate;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays + " days";
+    }
+
+    let allDonors = [];
+
     async function loadDonors() {
       try {
         const res = await fetch('/donorlist');
         if (!res.ok) throw new Error("Failed to fetch donors");
 
-        const donors = await res.json();
-        const tbody = document.getElementById('donorTableBody');
-        tbody.innerHTML = ''; // clear previous rows
-
-        donors.forEach(donor => {
-          const row = document.createElement('tr');
-          row.classList.add('hover:bg-red-700', 'transition');
-
-          row.innerHTML = `
-            <td class="border border-red-400 px-4 py-2">${donor.username || ''}</td>
-            <td class="border border-red-400 px-4 py-2">${donor.blood || ''}</td>
-            <td class="border border-red-400 px-4 py-2">${donor.mobile || ''}</td>
-          `;
-          tbody.appendChild(row);
-        });
+        allDonors = await res.json();
+        renderDonors(allDonors);
       } catch (err) {
         console.error(err);
         alert("Failed to load donor list");
       }
     }
+
+    function renderDonors(donors) {
+      const tbody = document.getElementById('donorTableBody');
+      tbody.innerHTML = ''; // clear previous rows
+
+      donors.forEach(donor => {
+        const row = document.createElement('tr');
+        row.classList.add('hover:bg-red-700', 'transition');
+
+        const daysDiff = calculateDaysDiff(donor.lastDonation);
+
+        row.innerHTML = `
+          <td class="border border-red-400 px-4 py-2">${donor.username || ''}</td>
+          <td class="border border-red-400 px-4 py-2">${donor.blood || ''}</td>
+          <td class="border border-red-400 px-4 py-2">${donor.mobile || ''}</td>
+          <td class="border border-red-400 px-4 py-2">${daysDiff}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Filter donors by blood group
+    document.getElementById('bloodSearch').addEventListener('input', (e) => {
+      const query = e.target.value.trim().toLowerCase();
+      const filtered = allDonors.filter(d => (d.blood || '').toLowerCase().includes(query));
+      renderDonors(filtered);
+    });
 
     loadDonors();
   </script>

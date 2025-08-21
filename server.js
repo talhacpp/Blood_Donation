@@ -31,7 +31,8 @@ const userSchema = new mongoose.Schema({
     username: String,
     mobile: String,
     blood: String,
-    hometown: String
+    hometown: String,
+    lastDonation: Date
 });
 const Users = mongoose.model("Users", userSchema);
 
@@ -48,7 +49,7 @@ function renderMessage(htmlFile, message = '', color = 'red') {
 // Root - Login page
 app.get('/', (req, res) => res.send(renderMessage('login.html', '')));
 
-// Registration page (optional GET route if needed)
+// Registration page
 app.get('/register', (req, res) => res.send(renderMessage('register.html', '')));
 
 // Register user
@@ -66,8 +67,9 @@ app.post('/register', async (req, res) => {
             password: hashedPassword,
             username,
             mobile: contactNumber,
-            blood: bloodGroup,
-            hometown: district
+            blood: bloodGroup,  // ✅ saved permanently
+            hometown: district,
+            lastDonation: null
         });
 
         await user.save();
@@ -95,7 +97,6 @@ app.post('/login', async (req, res) => {
             username: user.username
         };
 
-        // Redirect to home.html after login
         res.redirect('/home');
     } catch (error) {
         console.error(error);
@@ -123,7 +124,7 @@ app.get('/home', (req, res) => {
             </script>
         `);
     }
-    res.sendFile(path.join(__dirname, 'home.html')); // Make sure home.html exists
+    res.sendFile(path.join(__dirname, 'home.html'));
 });
 
 // Profile page - protected
@@ -141,7 +142,7 @@ app.get('/profile', (req, res) => {
     res.sendFile(path.join(__dirname, 'profile.html'));
 });
 
-// Profile data API (for JS fetch)
+// Profile data API
 app.get('/profile-data', async (req, res) => {
     if (!req.session.user) return res.status(401).json({ error: "Not logged in" });
 
@@ -154,8 +155,9 @@ app.get('/profile-data', async (req, res) => {
             email: user.email,
             username: user.username,
             mobile: user.mobile || '',
-            bloodGroup: user.blood || '',
-            hometown: user.hometown || ''
+            bloodGroup: user.blood || '',  // ✅ still shown
+            hometown: user.hometown || '',
+            lastDonation: user.lastDonation ? user.lastDonation.toISOString().split("T")[0] : ''
         });
     } catch (err) {
         console.error(err);
@@ -163,24 +165,24 @@ app.get('/profile-data', async (req, res) => {
     }
 });
 
-// Update profile
+// Update profile (blood group NOT editable)
 app.post('/updateProfile', async (req, res) => {
     if (!req.session.user) return res.send("You are not logged in ❌");
 
     try {
         const { email } = req.session.user;
-        const { username, mobile, blood, hometown } = req.body;
+        const { username, mobile, hometown, lastDonation } = req.body;  
+        // ❌ removed blood update here
 
         const user = await Users.findOne({ email });
         if (!user) return res.send("User not found ❌");
 
         user.username = username;
         user.mobile = mobile;
-        user.blood = blood;
         user.hometown = hometown;
+        if (lastDonation) user.lastDonation = new Date(lastDonation);
         await user.save();
 
-        // Update session username
         req.session.user.username = username;
 
         res.redirect('/profile');
@@ -190,17 +192,22 @@ app.post('/updateProfile', async (req, res) => {
     }
 });
 
-// Donor List - fetch all users
+// Donor List API
 app.get('/donorlist', async (req, res) => {
     try {
-        const donors = await Users.find({}, { username: 1, blood: 1, mobile: 1, _id: 0 });
+        const donors = await Users.find({}, {
+            username: 1,
+            blood: 1,
+            mobile: 1,
+            lastDonation: 1,
+            _id: 0
+        });
         res.json(donors);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Failed to fetch donors" });
     }
 });
-
 
 // Start server
 app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
