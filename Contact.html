@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Donation</title>
+  <link rel="stylesheet" href="./dist/output.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="bg-red-600 text-white font-[Poppins] overflow-x-hidden transition-colors duration-500">
+
+  <!-- Navbar -->
+  <nav class="w-full fixed top-0 bg-red-700 bg-opacity-90 backdrop-blur-md shadow-md z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <ul class="hidden md:flex space-x-8 font-semibold uppercase text-sm">
+        <li><a href="Home.html" class="hover:text-red-300 transition">Home</a></li>
+
+        <li><a href="What.html" class="hover:text-red-300 transition">What we Do</a></li>
+        <li><a href="Media.html" class="hover:text-red-300 transition">Media and Publication</a></li>
+        <li><a href="Contact.html" class="hover:text-red-300 transition">Contact Us</a></li>
+        <li><a href="DonorList.html" class="hover:text-red-300 transition">DonorList</a></li>
+        <li class="flex items-center space-x-3">
+          <img src="image/donor.png" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-white">
+          <a id="profileLink" href="profile.html" class="hover:text-red-300 transition">Your Profile</a>
+        </li>
+      </ul>
+
+      <!-- Hamburger Menu for Mobile -->
+      <div id="hamburger" class="space-y-1 md:hidden cursor-pointer z-20">
+        <div class="w-6 h-0.5 bg-white"></div>
+        <div class="w-6 h-0.5 bg-white"></div>
+        <div class="w-6 h-0.5 bg-white"></div>
+      </div>
+
+      <ul id="menu" class="hidden absolute top-16 right-6 bg-red-700 p-5 rounded-b-3xl space-y-6 text-sm uppercase">
+        <li><a href="Home.html" class="hover:text-white transition">Home</a></li>
+        
+        <li><a href="What.html" class="hover:text-white transition">What we Do</a></li>
+        <li><a href="Media.html" class="hover:text-white transition">Media and Publication</a></li>
+        <li><a href="Contact.html" class="hover:text-white transition">Contact Us</a></li>
+        <li><a href="DonorList.html" class="hover:text-red-300 transition">DonorList</a></li>
+        <div class="flex items-center space-x-3">
+          <img src="image/donor.png" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-white">
+          <a id="profileLinkMobile" href="profile.html" class="hover:text-red-300 transition">Your Profile</a>
+        </div>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contact Section -->
+  <footer class="bg-red-700 mt-32 py-10">
+    <div class="max-w-5xl mx-auto px-6 text-center space-y-6">
+      <h2 class="text-2xl font-bold uppercase">Contact Us</h2>
+      <div class="flex flex-col md:flex-row justify-center items-center gap-8 text-lg">
+        <a href="tel:+8801798879794" class="flex items-center gap-3 hover:text-red-300 transition">
+          <i class="fa-solid fa-phone"></i> +880 1798-797-94
+        </a>
+        <a href="mailto:talhabinkobir4050@gmail.com" class="flex items-center gap-3 hover:text-red-300 transition">
+          <i class="fa-solid fa-envelope"></i> info@blooddonation.org 
+        </a>
+        <a href="https://facebook.com" target="_blank" class="flex items-center gap-3 hover:text-red-300 transition">
+          <i class="fa-brands fa-facebook"></i> Facebook
+        </a>
+        <a href="skype:talha.skype.com" class="flex items-center gap-3 hover:text-red-300 transition">
+          <i class="fa-brands fa-skype"></i> Skype
+        </a>
+        <a href="https://wa.me/8801798879794" target="_blank" class="flex items-center gap-3 hover:text-red-300 transition">
+          <i class="fa-brands fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

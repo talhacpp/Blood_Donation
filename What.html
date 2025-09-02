@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What We Do</title>
+  <link rel="stylesheet" href="./dist/output.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Floating / animated hero image */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .float-animation {
+      animation: float 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-red-600 text-white font-[Poppins] overflow-x-hidden transition-colors duration-500">
+
+  <!-- Navbar -->
+  <nav class="w-full fixed top-0 bg-red-700 bg-opacity-90 backdrop-blur-md shadow-md z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Desktop Menu -->
+      <ul class="hidden md:flex space-x-8 font-semibold uppercase text-sm">
+        <li><a href="Home.html" class="hover:text-red-300 transition">Home</a></li>
+        <li><a href="What.html" class="hover:text-red-300 transition">What we Do</a></li>
+        <li><a href="Media.html" class="hover:text-red-300 transition">Media and Publication</a></li>
+        <li><a href="Contact.html" class="hover:text-red-300 transition">Contact Us</a></li>
+        <li><a href="DonorList.html" class="hover:text-red-300 transition">DonorList</a></li>
+        <li class="flex items-center space-x-3">
+          <img src="image/donor.png" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-white">
+          <a href="profile.html" class="hover:text-red-300 transition">Your Profile</a>
+        </li>
+      </ul>
+
+      <!-- Mobile Hamburger -->
+      <div class="md:hidden relative">
+        <label for="menuCheckbox" class="flex flex-col cursor-pointer z-50">
+          <span class="block w-6 h-0.5 bg-white my-1"></span>
+          <span class="block w-6 h-0.5 bg-white my-1"></span>
+          <span class="block w-6 h-0.5 bg-white my-1"></span>
+        </label>
+        <input type="checkbox" id="menuCheckbox" class="hidden">
+        <ul class="hidden absolute top-16 right-6 bg-red-700 p-5 rounded-b-3xl space-y-6 text-sm uppercase">
+          <li><a href="Home.html" class="hover:text-white transition">Home</a></li>
+          <li><a href="What.html" class="hover:text-white transition">What we Do</a></li>
+          <li><a href="Media.html" class="hover:text-white transition">Media and Publication</a></li>
+          <li><a href="Contact.html" class="hover:text-white transition">Contact Us</a></li>
+          <li><a href="DonorList.html" class="hover:text-red-300 transition">DonorList</a></li>
+          <li class="flex items-center space-x-3">
+            <img src="image/donor.png" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-white">
+            <a href="profile.html" class="hover:text-red-300 transition">Your Profile</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero + Description Row -->
+<section class="pt-32 px-6 max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10">
+  
+  <!-- Hero Image -->
+  <div class="flex-1 flex justify-center md:justify-start">
+    <img src="image/17f56cc7e98544b843e146b06f5b282e.jpg" 
+         alt="Blood Donation" 
+         class="w-64 sm:w-80 md:w-96 lg:w-80 rounded-2xl shadow-2xl float-animation">
+  </div>
+
+  <!-- Description Text -->
+  <div class="flex-1 text-center md:text-left space-y-6">
+    <h2 class="text-3xl md:text-4xl font-bold">Our Work</h2>
+    <p class="text-white text-lg md:text-xl">
+      We work with the RUET donor database to track and calculate the last donation date for each donor. 
+      This ensures that no one donates blood before 90 days have passed, maintaining the safety and health of our donors and recipients.
+    </p>
+    <p class="text-white text-lg md:text-xl">
+      Our system carefully verifies donation intervals, manages donor records, and provides timely notifications for safe blood donation. 
+      By maintaining accurate records and enforcing donation guidelines, we help keep the blood donation process safe, efficient, and reliable for everyone involved.
+    </p>
+  </div>
+
+</section>
+
+
+</body>
+</html>
+
+
+
