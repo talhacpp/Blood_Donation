@@ -110,12 +110,15 @@ app.post('/login', async (req, res) => {
         };
 
         // Show popup and redirect
-        res.send(`
-            <script>
-                alert("Login Successful! Welcome ${user.username}");
-                window.location.href = '/home';
-            </script>
-        `);
+        // res.send(`
+        //     <script>
+        //         alert("Login Successful! Welcome ${user.username}");
+        //         window.location.href = '/home';
+        //     </script>
+        // `);
+     
+     res.redirect('/home');  
+
     } catch (error) {
         console.error(error);
         res.send(renderMessage('index.html', "Something went wrong 🚨"));
