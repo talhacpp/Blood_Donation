@@ -1,9 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt'); 
 const fs = require('fs');
-const session = require('express-session');
+const session = require('express-session'); 
 
 const app = express();
 const port = 8081;
@@ -20,7 +21,7 @@ app.use(session({
 }));
 
 // MongoDB connection
-mongoose.connect('mongodb://127.0.0.1:27017/registers');
+mongoose.connect(`${process.env.DATABASE_URL}`);
 const db = mongoose.connection;
 db.once('open', () => console.log("MongoDB connection successful"));
 
