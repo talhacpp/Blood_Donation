@@ -143,7 +143,7 @@ app.get('/home', (req, res) => {
             </script>
         `);
     }
-    res.sendFile(path.join(__dirname, 'home.html'));
+    res.sendFile(path.join(__dirname, 'Home.html'));
 });
 
 // Profile page - protected
