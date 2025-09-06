@@ -41,25 +41,25 @@
       </ul>
 
       <!-- Mobile Hamburger -->
-      <div class="md:hidden relative">
-        <label for="menuCheckbox" class="flex flex-col cursor-pointer z-50">
-          <span class="block w-6 h-0.5 bg-white my-1"></span>
-          <span class="block w-6 h-0.5 bg-white my-1"></span>
-          <span class="block w-6 h-0.5 bg-white my-1"></span>
-        </label>
-        <input type="checkbox" id="menuCheckbox" class="hidden">
-        <ul class="hidden absolute top-16 right-6 bg-red-700 p-5 rounded-b-3xl space-y-6 text-sm uppercase">
-          <li><a href="Home.html" class="hover:text-white transition">Home</a></li>
-          <li><a href="What.html" class="hover:text-white transition">What we Do</a></li>
-          <li><a href="Media.html" class="hover:text-white transition">Media and Publication</a></li>
-          <li><a href="Contact.html" class="hover:text-white transition">Contact Us</a></li>
-          <li><a href="DonorList.html" class="hover:text-red-300 transition">DonorList</a></li>
-          <li class="flex items-center space-x-3">
-            <img src="image/donor.png" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-white">
-            <a href="profile.html" class="hover:text-red-300 transition">Your Profile</a>
-          </li>
-        </ul>
+      <div id="hamburger" class="space-y-1 md:hidden cursor-pointer z-20">
+        <div class="w-6 h-0.5 bg-white"></div>
+        <div class="w-6 h-0.5 bg-white"></div>
+        <div class="w-6 h-0.5 bg-white"></div>
       </div>
+
+      <ul id="menu" class="hidden absolute top-16 right-6 bg-red-700 p-5 rounded-b-3xl space-y-6 text-sm uppercase">
+        <li><a href="Home.html" class="hover:text-white transition">Home</a></li>
+        <li><a href="What.html" class="hover:text-white transition">What we Do</a></li>
+        <li><a href="Media.html" class="hover:text-white transition">Media and Publication</a></li>
+        <li><a href="Contact.html" class="hover:text-white transition">Contact Us</a></li>
+        <li><a href="DonorList.html" class="hover:text-red-300 transition">DonorList</a></li>
+        <div class="flex items-center space-x-3">
+          <img src="image/donor.png" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-white">
+          <a id="profileLinkMobile" href="profile.html" class="hover:text-red-300 transition">Your Profile</a>
+        </div>
+      </ul>
+    </div>
+
     </div>
   </nav>
 
@@ -87,7 +87,7 @@
   </div>
 
 </section>
-
+<script src="./menu.js"></script>
 
 </body>
 </html>
