@@ -7,10 +7,11 @@ const fs = require('fs');
 const session = require('express-session'); 
 
 const app = express();
-const port = 8081;
+const port = process.env.PORT || 8081;
 
-// Middleware
-app.use(express.static(__dirname));
+// ------------------ MIDDLEWARE ------------------
+// Serve static files from public folder (HTML, CSS, JS, images)
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 // Session setup
@@ -20,12 +21,12 @@ app.use(session({
     saveUninitialized: false
 }));
 
-// MongoDB connection
-mongoose.connect(`${process.env.DATABASE_URL}`);
+// ------------------ DATABASE ------------------
+mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
-db.once('open', () => console.log("MongoDB connection successful"));
+db.once('open', () => console.log("✅ MongoDB connection successful"));
 
-// User schema
+// ------------------ USER SCHEMA ------------------
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,
@@ -39,7 +40,7 @@ const Users = mongoose.model("Users", userSchema);
 
 // ------------------ HELPER ------------------
 function renderMessage(htmlFile, message = '', redirect = '') {
-    let html = fs.readFileSync(path.join(__dirname, htmlFile), 'utf8');
+    let html = fs.readFileSync(path.join(__dirname, 'public', htmlFile), 'utf8');
 
     if (message) {
         const script = `
@@ -48,7 +49,6 @@ function renderMessage(htmlFile, message = '', redirect = '') {
                 ${redirect ? `window.location.href='${redirect}';` : ''}
             </script>
         `;
-        // inject popup before </body>
         html = html.replace('</body>', `${script}</body>`);
     }
 
@@ -109,15 +109,7 @@ app.post('/login', async (req, res) => {
             username: user.username
         };
 
-        // Show popup and redirect
-        // res.send(`
-        //     <script>
-        //         alert("Login Successful! Welcome ${user.username}");
-        //         window.location.href = '/home';
-        //     </script>
-        // `);
-     
-     res.redirect('/home');  
+        res.redirect('/home');  
 
     } catch (error) {
         console.error(error);
@@ -143,7 +135,7 @@ app.get('/home', (req, res) => {
             </script>
         `);
     }
-    res.sendFile(path.join(__dirname, 'home.html'));
+    res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 
 // Profile page - protected
@@ -156,7 +148,7 @@ app.get('/profile', (req, res) => {
             </script>
         `);
     }
-    res.sendFile(path.join(__dirname, 'profile.html'));
+    res.sendFile(path.join(__dirname, 'public', 'profile.html'));
 });
 
 // Profile data API
@@ -225,5 +217,5 @@ app.get('/donorlist', async (req, res) => {
     }
 });
 
-// Start server
-app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
+// ------------------ START SERVER ------------------
+app.listen(port, () => console.log(`🚀 Server running at http://localhost:${port}`));
