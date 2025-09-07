@@ -1,11 +1,10 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const path = require('path');
-const bcrypt = require('bcrypt'); 
-const fs = require('fs');
-const session = require('express-session'); 
-
+require('dotenv').config(); // Take DBURL from .env (security purpose)
+const express = require('express'); //Serving form data
+const mongoose = require('mongoose'); //Database
+const path = require('path'); // Function - non-blocking
+const bcrypt = require('bcrypt');  //hash
+const fs = require('fs'); 
+const session = require('express-session'); // for holding in login page
 const app = express();
 const port = 8081;
 
@@ -13,7 +12,7 @@ const port = 8081;
 app.use(express.static(__dirname));
 app.use(express.urlencoded({ extended: true }));
 
-// Session setup
+// Session setup 
 app.use(session({
     secret: 'yourSecretKey',
     resave: false,
@@ -38,6 +37,7 @@ const userSchema = new mongoose.Schema({
 const Users = mongoose.model("Users", userSchema);
 
 // ------------------ HELPER ------------------
+
 function renderMessage(htmlFile, message = '', redirect = '') {
     let html = fs.readFileSync(path.join(__dirname, htmlFile), 'utf8');
 
@@ -58,7 +58,7 @@ function renderMessage(htmlFile, message = '', redirect = '') {
 // ------------------ ROUTES ------------------
 
 // Root - login page
-app.get('/', (req, res) => res.send(renderMessage('index.html')));
+app.get('/', (req, res) => res.send(renderMessage('index.html'))); //default page login
 
 // Registration page
 app.get('/register', (req, res) => res.send(renderMessage('register.html')));
@@ -85,15 +85,16 @@ app.post('/register', async (req, res) => {
             lastDonation: null
         });
 
+        //after registration message
         await user.save();
         res.send(renderMessage('index.html', "Registration Successful! Please login"));
     } catch (error) {
         console.error(error);
-        res.send(renderMessage('register.html', "Internal Server Error 🚨"));
+        res.send(renderMessage('register.html', "Internal Server Error "));
     }
 });
 
-// Login user
+// Login user password wrong and Email wrong message
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -109,19 +110,12 @@ app.post('/login', async (req, res) => {
             username: user.username
         };
 
-        // Show popup and redirect
-        // res.send(`
-        //     <script>
-        //         alert("Login Successful! Welcome ${user.username}");
-        //         window.location.href = '/home';
-        //     </script>
-        // `);
-     
+        
      res.redirect('/home');  
 
     } catch (error) {
         console.error(error);
-        res.send(renderMessage('index.html', "Something went wrong 🚨"));
+        res.send(renderMessage('index.html', "Something went wrong "));
     }
 });
 
@@ -129,7 +123,7 @@ app.post('/login', async (req, res) => {
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) return res.send("Error logging out");
-        res.redirect('/');
+        res.redirect('/'); //to route
     });
 });
 
@@ -146,9 +140,9 @@ app.get('/home', (req, res) => {
     res.sendFile(path.join(__dirname, 'Home.html'));
 });
 
-// Profile page - protected
+// Profile page - protected - security
 app.get('/profile', (req, res) => {
-    if (!req.session.user) {
+    if (!req.session.user) { 
         return res.send(`
             <script>
                 alert("You are not logged in. Redirecting to login page...");
@@ -159,7 +153,7 @@ app.get('/profile', (req, res) => {
     res.sendFile(path.join(__dirname, 'profile.html'));
 });
 
-// Profile data API
+// Profile data API - HTTP 401 Unauthorized
 app.get('/profile-data', async (req, res) => {
     if (!req.session.user) return res.status(401).json({ error: "Not logged in" });
 
@@ -182,7 +176,7 @@ app.get('/profile-data', async (req, res) => {
     }
 });
 
-// Update profile
+// Update profile 
 app.post('/updateProfile', async (req, res) => {
     if (!req.session.user) return res.send("You are not logged in");
 
@@ -204,7 +198,7 @@ app.post('/updateProfile', async (req, res) => {
         res.redirect('/profile');
     } catch (error) {
         console.error(error);
-        res.send("Something went wrong 🚨");
+        res.send("Something went wrong ");
     }
 });
 

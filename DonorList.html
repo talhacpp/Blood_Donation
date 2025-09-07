@@ -1,3 +1,4 @@
+<!-- OK -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +36,6 @@
         </tr>
       </thead>
       <tbody id="donorTableBody">
-        <!-- Donor rows will be inserted here -->
       </tbody>
     </table>
   </div>
@@ -44,16 +44,16 @@
     // Calculate difference in days
     function calculateDaysDiff(dateStr) {
       if (!dateStr) return "—"; // no donation date
-      const today = new Date();
+      const today = new Date(); //present date
       const donationDate = new Date(dateStr);
       if (isNaN(donationDate)) return "Invalid Date";
 
-      const diffTime = today - donationDate;
+      const diffTime = today - donationDate; //milisecond
       const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
       return diffDays + " days";
     }
 
-    let allDonors = [];
+    let allDonors = []; // array for all donors
 
     async function loadDonors() {
       try {
@@ -68,7 +68,7 @@
       }
     }
 
-    function renderDonors(donors) {
+    function renderDonors(donors) { //show the donors
       const tbody = document.getElementById('donorTableBody');
       tbody.innerHTML = ''; // clear previous rows
 
@@ -94,7 +94,7 @@
       const filtered = allDonors.filter(d => (d.blood || '').toLowerCase().includes(query));
       renderDonors(filtered);
     });
-
+    
     loadDonors();
   </script>
 
